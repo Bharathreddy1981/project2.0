@@ -1,1 +1,1 @@
-from . import database, register, password, validations, total, update, delete
+from . import database, register, validations, total, update, delete
