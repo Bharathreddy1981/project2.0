@@ -9,13 +9,23 @@ def update(db, post_data, validations_data):
         role = post_data['role_name']
         cursor = db.cursor()
 
+    query11 = "select * from user where  email ='" + str(email) + "'"
+    cursor.execute(query11)
+    db.commit()
+    red = cursor.fetchall()
+    login_list11 = []
+    for i in red:
+        k = {"name": i[0], "email": i[1], "role_type": i[2], "phone": i[3]}
+        login_list11.append(k)
+    if len(login_list11) == 0:
+        return {"email": "The email does not exists to update the values"}
+
     try:
         query = "UPDATE user SET  name = ('" + str(name) + "'), role_type = ('" + str(role) + "'), phone_number = ('" + str(phone) + "') where email = '" + str(email) + "'"
         cursor.execute(query)
         db.commit()
     except Exception as e:
         return {
-            'Error': str(e).split()[1].replace('\"', '') + " " + str(e).split()[2] + " " + str(e).split()[-1].replace(
-                "'register_table.", "").replace("'", "").replace('\")', '').replace('user.', '')}
+            'Error': str(e)}
 
     return {"User": 'updated User successfully'}
