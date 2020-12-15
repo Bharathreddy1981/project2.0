@@ -18,12 +18,12 @@ def list_user():
     return jsonify(value)
 
 
-@main.route("/update_data", methods=['POST'])
-def edit_user():
+@main.route("/update_data/email=<values>", methods=['POST'])
+def edit_user(values):
     json_data = request.get_json()
     db = database.base()
     validations_data = validations.valid(json_data)
-    value = update.update(db, json_data, validations_data)
+    value = update.update(db, values, json_data, validations_data)
     return jsonify(value)
 
 @main.route("/delete_data", methods=['POST'])
